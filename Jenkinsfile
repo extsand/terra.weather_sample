@@ -48,7 +48,7 @@ pipeline {
 								[Application link](http://${APP_IP})
       					[Database link](http://${DB_IP})
 								------------------------------
-								*${VAR_TEXT}*
+								*EXAMPLE*
 								*bold text*
 								***italic***
 								simple text
