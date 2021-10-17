@@ -41,15 +41,11 @@ pipeline {
 							sh  ("""
 								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
 								*${VAR_TEXT}*
-								${VAR_TEXT} ${VAR_TEXT}
-
-							 **bold**
-								*italic*
-								`code`
-								~~strike~~
-								<u>underline</u>
-								<pre language="c++">code</pre>
-								[text](http://example.com)
+								*bold text*
+								***italic***
+								simple text
+								`code example`
+								[link Example](http://example.com)
 								'
 							""")
 						}	
