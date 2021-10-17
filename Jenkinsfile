@@ -3,13 +3,7 @@
 pipeline {
     agent any
 
-		// chek git repo every minute
-    triggers {
-		// 	// every 1 minute
-		// 	// pollSCM('H/2 * * * *')
-			// pollSCM( '* * * * *')
-		}
-
+	
     environment {
 			VAR_TEXT = 'Hello from docker master'
        
