@@ -43,12 +43,12 @@ pipeline {
 								*${VAR_TEXT}*
 								${VAR_TEXT} ${VAR_TEXT}
 
-								<b>bold</b>, <strong>bold</strong>, **bold**
- <i>italic</i>, <em>italic</em> *italic*
- <code>code</code>, `code`
- <s>strike</s>, <strike>strike</strike>, <del>strike</del>, ~~strike~~
- <u>underline</u>
- <pre language="c++">code</pre>
+							 **bold**
+								*italic*
+								`code`
+								~~strike~~
+								<u>underline</u>
+								<pre language="c++">code</pre>
 								'
 							""")
 						}	
