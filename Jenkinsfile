@@ -1,5 +1,7 @@
 // https://www.jenkins.io/doc/pipeline/tour/environment/
-// jenkins snipets
+// jenkins snipets+
+// More about telegram notifications
+// https://42point.com/posts/telegram-notifications-jenkins
 pipeline {
     agent any
 
@@ -40,6 +42,13 @@ pipeline {
 								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
 								*${VAR_TEXT}*
 								${VAR_TEXT} ${VAR_TEXT}
+
+								<b>bold</b>, <strong>bold</strong>, **bold**
+ <i>italic</i>, <em>italic</em> *italic*
+ <code>code</code>, `code`
+ <s>strike</s>, <strike>strike</strike>, <del>strike</del>, ~~strike~~
+ <u>underline</u>
+ <pre language="c++">code</pre>
 								'
 							""")
 						}	
