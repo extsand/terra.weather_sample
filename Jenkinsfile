@@ -45,8 +45,8 @@ pipeline {
 								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
 								*${HEADER_MESSAGE}*
 								${BODY_MESSAGE}
-								[Application link](${APP_IP})
-      					[Database link](${DB_IP})
+								[Application link](http://${APP_IP})
+      					[Database link](http://${DB_IP})
 								------------------------------
 								*${VAR_TEXT}*
 								*bold text*
