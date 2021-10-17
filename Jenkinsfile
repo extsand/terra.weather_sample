@@ -51,6 +51,7 @@ pipeline {
 								*Published* = YES'
 							""")
 						}	
+					}
 
 					aborted {            
            withCredentials([string(
@@ -69,6 +70,7 @@ pipeline {
 								*Published* = YES'
 							""")
 						}	
+					}
 						
 					failure {            
            withCredentials([string(
@@ -88,6 +90,6 @@ pipeline {
 							""")
 						}	
 				
-		}
+					}
     
 }
