@@ -7,8 +7,11 @@ pipeline {
 
 	
     environment {
-			VAR_TEXT = 'Hello from docker master'
-       
+			HEADER_MESSAGE = 'Notify example'
+			BODY_MESSAGE = 'Application was deployed. You can open it in link below'
+			APP_IP = '192.168.1.29'
+      DB_IP = '102.123.2.3'
+
 		
     } 
 
@@ -40,6 +43,11 @@ pipeline {
 						variable: 'TELEGRAM_BOT_TOKEN')]) {
 							sh  ("""
 								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
+								*${HEADER_MESSAGE}*
+								${BODY_MESSAGE}
+								[Application link](${APP_IP})
+      					[Database link](${DB_IP})
+								------------------------------
 								*${VAR_TEXT}*
 								*bold text*
 								***italic***
@@ -61,6 +69,22 @@ pipeline {
 					}
 
 					aborted {            
+           withCredentials([string(
+						credentialsId: 'chat_id', 
+						variable: 'TELEGRAM_CHAT_ID'
+						), 
+						string(
+						credentialsId: 'Bot_TOKEN', 
+						variable: 'TELEGRAM_BOT_TOKEN')]) {
+							sh  ("""
+								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
+								ABORTED
+								'
+							""")
+						}	
+					}
+
+					failure {            
            withCredentials([string(
 						credentialsId: 'chat_id', 
 						variable: 'TELEGRAM_CHAT_ID'
