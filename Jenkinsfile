@@ -49,6 +49,7 @@ pipeline {
 								~~strike~~
 								<u>underline</u>
 								<pre language="c++">code</pre>
+								[text](http://example.com)
 								'
 							""")
 						}	
