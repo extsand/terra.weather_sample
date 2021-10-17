@@ -46,10 +46,15 @@ pipeline {
 								simple text
 								`code example`
 								[link Example](http://example.com)
-
+								---------------------------------------
 								**hello world** 
 								__italic__
 								```monospace```
+								---------------------------------------
+								<b>your text</b> — bold;
+								<i>your text</i> — italics;
+								<u>your text</u> — underlined;
+								<s>your text</s> — strikethrough.
 								'
 							""")
 						}	
