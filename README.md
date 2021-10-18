@@ -1,4 +1,7 @@
 # Terra.Weather - sample repository
+<p align="center">
+	<img src="https://github.com/extsand/terra.weather_sample/blob/main/terra.weather/static/web_template/img/terra.weather.png" width="500" height="auto">
+</p>
 ## Python Flask Application
 
 Real time, data-driven, concreted.
