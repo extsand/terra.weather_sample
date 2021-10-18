@@ -16,5 +16,7 @@ Jenkins - https://www.jenkins.io/
 
 <br><br>
 It's demonstration repository. 
-Set .env for personal workflow
-You can set application environments with set_env-sample.sh
+<br>
+Set .env for personal workflow.
+<br>
+Also, you can set application environments with set_env-sample.sh
