@@ -1,0 +1,8 @@
+
+PyChar Sass settigs
+
+
+
+$FileName$:$ProjectFileDir$/static/style/css/$FileNameWithoutExtension$.css
+
+$ProjectFileDir$$/static/style/css/$FileNameWithoutExtension$.css:/static/style/css/$FileNameWithoutExtension$.css.map

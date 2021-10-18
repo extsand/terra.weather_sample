@@ -1,5 +1,4 @@
-# Terra.Weather
-## sample repo
+# Terra.Weather - sample repository
 ## Python Flask Application
 
 Real time, data-driven, concreted.
@@ -18,3 +17,4 @@ Jenkins - https://www.jenkins.io/
 <br><br>
 It's demonstration repository. 
 Set .env for personal workflow
+You can set application environments with set_env-sample.sh

@@ -1,0 +1,162 @@
+// https://www.jenkins.io/doc/pipeline/tour/environment/
+// jenkins snipets
+pipeline {
+    agent any
+    environment {
+        PROJECT = "Terra.Weather"
+        DESCRIPTIONS = "GitHub -> Jenkins -> Docker -> -> AWS"
+        OWNER = "extsand"
+        GIT_REPO = "https://github.com/extsand/terra.weather.git"  
+				GIT_REPO_SSH = "git@github.com:extsand/terra.weather.git"
+				GIT_BRANCH = "dep_db"
+
+				DOCKER_HUB_IMAGE_NAME = "extsand/terra.weather_docker:latest"
+
+				ENV_FILE = ".env"
+
+				DB_INSTANCE = "AWS_DB-3.123.203.61"
+				DB_INFO = "3.123.203.61:27017"
+
+				WORK_DIR = "/home/ubuntu/docker_workplace"
+		
+    } 
+
+		options {
+        buildDiscarder(logRotator(
+					numToKeepStr: '3', 
+					artifactNumToKeepStr: '3'
+					))
+        timestamps()
+    }
+
+    stages {
+        stage('Introducting') {
+            steps {
+                echo "Hello User!\n It is ${PROJECT} project.\n We will use pipeline ${DESCRIPTIONS}.\n You can see files in ${GIT_REPO}."
+            }
+        }
+
+				stage('Clone Git Repository'){
+					steps {
+						echo '======== Clone app from git Repository ============='
+						echo "Get app files from ${GIT_REPO}"
+						git branch: "${GIT_BRANCH}", 
+						credentialsId: 'extsand_git_credentials', 
+						url: "${GIT_REPO_SSH}"
+
+					}
+				}
+				
+
+				stage('Upload DB to server'){
+					steps {
+						echo '=========== Set Docker image in local server ============'
+						sshPublisher(
+							publishers: [
+								sshPublisherDesc(
+									configName: "${DB_INSTANCE}", 
+									transfers: [
+										sshTransfer(
+											cleanRemote: false, 
+											excludes: '',
+											execCommand: "cd ${WORK_DIR}; \
+																		tar -xf db_install.tar; \
+																		bunzip2 terra_db.tar.bz2; \
+																		tar -xf terra_db.tar; \
+																		docker-compose down; \
+																		docker-compose build; \
+																		docker-compose up -d; ",
+											execTimeout: 1200000, 
+											flatten: false, 
+											makeEmptyDirs: false, 
+											noDefaultExcludes: false, 
+											patternSeparator: '[, ]+', 
+											remoteDirectory: '', 
+											remoteDirectorySDF: false, 
+											removePrefix: '', 
+											// Get secrets from Git To jenkins
+											sourceFiles: "db_install.tar"
+						
+										)
+									], 
+									usePromotionTimestamp: false, 
+									useWorkspaceInPromotion: false, 
+									verbose: true
+								)
+							]
+						)
+
+					}
+				}
+    
+    }   
+
+		post {
+          success {            
+           withCredentials([string(
+						credentialsId: 'chat_id', 
+						variable: 'TELEGRAM_CHAT_ID'
+						), 
+						string(
+						credentialsId: 'Bot_TOKEN', 
+						variable: 'TELEGRAM_BOT_TOKEN')]) {
+							sh  ("""
+								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
+								*DB deploy was Successful*	
+								${PROJECT}
+								${GIT_REPO}
+								Docker Image: ${DOCKER_HUB_IMAGE_NAME}
+								DB Instance: ${DB_INSTANCE}
+								[DB Address](http://${DB_INFO})		
+								'
+							""")
+						}	
+					}
+
+					aborted {            
+           withCredentials([string(
+						credentialsId: 'chat_id', 
+						variable: 'TELEGRAM_CHAT_ID'
+						), 
+						string(
+						credentialsId: 'Bot_TOKEN', 
+						variable: 'TELEGRAM_BOT_TOKEN')]) {
+							sh  ("""
+								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
+								*DB deploy was ABORTED*
+								*CHECK JENKINS CONSOLE*	
+								[Jenkins console](http://192.168.1.7:8080/)
+								${PROJECT}
+								${GIT_REPO}
+								Docker Image: ${DOCKER_HUB_IMAGE_NAME}
+								DB Instance: ${DB_INSTANCE}
+								[DB Address](http://${DB_INFO})						
+								'
+							""")
+						}	
+					}
+
+					failure {            
+           withCredentials([string(
+						credentialsId: 'chat_id', 
+						variable: 'TELEGRAM_CHAT_ID'
+						), 
+						string(
+						credentialsId: 'Bot_TOKEN', 
+						variable: 'TELEGRAM_BOT_TOKEN')]) {
+							sh  ("""
+								curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${TELEGRAM_CHAT_ID} -d parse_mode=markdown -d text='
+								*Build was FAILURE*
+								*CHECK JENKINS CONSOLE*	
+								[Jenkins console](http://192.168.1.7:8080/)
+								${PROJECT}
+								${GIT_REPO}
+								Docker Image: ${DOCKER_HUB_IMAGE_NAME}
+								DB Instance: ${DB_INSTANCE}
+								[DB Address](http://${DB_INFO})				
+								'
+							""")
+						}	
+					}
+				}
+}

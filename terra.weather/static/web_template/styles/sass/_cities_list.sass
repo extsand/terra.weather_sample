@@ -1,0 +1,44 @@
+@import _variables.sass
+
+.cities-table
+  max-width: 600px
+  max-height: 600px
+  overflow-y: scroll
+
+  background-color: #fff
+  background-color: rgba(255, 255, 255, 0.15)
+  backdrop-filter: blur(10px) !important
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6)
+  border: 2px solid rgba(255, 255, 255, 0.1)
+  border-radius: 10px
+  @media only screen and (max-width: 500px)
+    max-width: 320px
+
+
+  table
+    margin: 1rem
+    @media only screen and (max-width: 500px)
+      margin: 0.3rem
+      border-spacing: 0
+    tr
+      th
+        font-weight: 400
+        padding: 5px 5px
+        font-size: 1.3rem
+        width: 10rem
+        text-align: center
+        a
+          color: #ffffff
+        @media only screen and (max-width: 500px)
+          text-align: left
+          padding: 5px 2px
+          width: 1rem
+          max-width: 7rem
+          font-size: 1rem
+
+.cities-coord-links
+  //text-align: center
+  border-radius: 1rem
+  transition: background-color 0.4s ease-in-out
+  &:hover
+     background-color: $button_color

@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+			<div class="content in_progress">
+				<div class="review in_progress">
+					<div class="review-title">Cities</div>
+                    <div class="cities-table">
+                        <table>
+                                <tr>
+                                    <th><b>Name</b></th>
+                                    <th><b>Country</b></th>
+                                    <th><b>Coordinates</b></th>
+                                    <th><b>ID OSM</b></th>
+                                </tr>
+                                {% for item in data %}
+                                    <tr>
+                                        <th>{{ item['name'] }}</th>
+                                        <th>{{ item['country'] }}</th>
+                                        <th class="cities-coord-links" ><a  class="cities-coord-links" href="{{ item['link'] }}" target="_blank">{{ item['lat'] }}, {{ item['lon'] }}</a> </th>
+                                        <th>{{ item['id'] }}</th>
+                                    </tr>
+                                {% endfor %}
+                        </table>
+                    </div>
+
+
+
+
+			</div>
+
+
+
+
+
+{% endblock content %}
