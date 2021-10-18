@@ -2,11 +2,13 @@
 <p align="center">
 	<img src="https://github.com/extsand/terra.weather_sample/blob/main/terra.weather/static/web_template/img/terra.weather.png" width="auto" height="auto">
 </p>
+
 ## Python Flask Application
 
 Real time, data-driven, concreted.
 The application that shows a fast weather forecast based on data from more than 10,000 weather stations. 
-
+<br>
+<br>
 In this project was used:
 <br>
 Open Weather Map - https://openweathermap.org/
@@ -16,8 +18,8 @@ MongoDB - https://www.mongodb.com/
 Docker - https://www.docker.com/
 <br>
 Jenkins - https://www.jenkins.io/
-
-<br><br>
+<br>
+<br>
 It's demonstration repository. 
 <br>
 Set .env for personal workflow.
